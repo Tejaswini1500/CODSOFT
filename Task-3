@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Advanced Calculator</title>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <button class="clear" onclick="calculator.clear()">C</button>
+        <button class="operator" onclick="calculator.appendSymbol('/')">/</button>
+        <button class="operator" onclick="calculator.appendSymbol('*')">*</button>
+        <button onclick="calculator.appendSymbol('7')">7</button>
+        <button onclick="calculator.appendSymbol('8')">8</button>
+        <button onclick="calculator.appendSymbol('9')">9</button>
+        <button class="operator" onclick="calculator.appendSymbol('-')">-</button>
+        <button onclick="calculator.appendSymbol('4')">4</button>
+        <button onclick="calculator.appendSymbol('5')">5</button>
+        <button onclick="calculator.appendSymbol('6')">6</button>
+        <button class="operator" onclick="calculator.appendSymbol('+')">+</button>
+        <button onclick="calculator.appendSymbol('1')">1</button>
+        <button onclick="calculator.appendSymbol('2')">2</button>
+        <button onclick="calculator.appendSymbol('3')">3</button>
+        <button class="equal" onclick="calculator.calculateResult()">=</button>
+        <button onclick="calculator.appendSymbol('0')">0</button>
+        <button class="dot" onclick="calculator.appendSymbol('.')">.</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+<!--CSS file--!>
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.calculator {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 8px;
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.display {
+    grid-column: span 4;
+    background-color: #e0e0e0;
+    padding: 10px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #ccc;
+}
+
+button {
+    padding: 15px;
+    font-size: 1.2em;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #61dafb;
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #4fa3d1;
+}
+
+button.operator {
+    background-color: #ff8c00;
+}
+
+button.operator:hover {
+    background-color: #d47a00;
+}
+
+button.equal {
+    background-color: #2ecc71;
+}
+
+button.equal:hover {
+    background-color: #27ae60;
+}
+
+button.clear {
+    background-color: #e74c3c;
+}
+
+button.clear:hover {
+    background-color: #c0392b;
+}
+
+button.dot {
+    background-color: #3498db;
+}
+
+button.dot:hover {
+    background-color: #2980b9;
+}
+<!--JS FILE--!>
+class Calculator {
+    constructor() {
+        this.currentInput = '0';
+        this.displayElement = document.getElementById('display');
+    }
+
+    updateDisplay() {
+        this.displayElement.innerText = this.currentInput;
+    }
+
+    clear() {
+        this.currentInput = '0';
+        this.updateDisplay();
+    }
+
+    appendSymbol(symbol) {
+        if (this.currentInput === '0' && symbol !== '.') {
+            this.currentInput = symbol;
+        } else {
+            this.currentInput += symbol;
+        }
+        this.updateDisplay();
+    }
+
+    calculateResult() {
+        try {
+            this.currentInput = eval(this.currentInput).toString();
+            this.updateDisplay();
+        } catch (error) {
+            this.currentInput = 'Error';
+            this.updateDisplay();
+        }
+    }
+}
+
+const calculator = new Calculator();
